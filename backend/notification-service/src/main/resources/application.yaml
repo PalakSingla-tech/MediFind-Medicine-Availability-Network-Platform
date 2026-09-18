@@ -1,0 +1,45 @@
+spring:
+  application:
+    name: notification-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/notification_db?createDatabaseIfNotExist=true
+    username: ur-username
+    password: ur-password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+  mail:
+    host: ${SPRING_MAIL_HOST:smtp.gmail.com}
+    port: ${SPRING_MAIL_PORT:587}
+    username: ${SPRING_MAIL_USERNAME:}
+    password: ${SPRING_MAIL_PASSWORD:}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+          connection-timeout: 5000
+          timeout: 5000
+          write-timeout: 5000
+
+server:
+  port: 8086
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  defaultZone:
+    url: http://localhost:8761/eureka/
+
+twilio:
+  account-sid: ${TWILIO_ACCOUNT_SID:AC_MOCK_ACCOUNT_SID}
+  auth-token: ${TWILIO_AUTH_TOKEN:mock_auth_token}
+  phone-number: ${TWILIO_PHONE_NUMBER:}
+  mock-mode: ${TWILIO_MOCK_MODE:auto}
