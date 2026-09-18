@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: pharmacy-service
+  datasource:
+    url: jdbc:postgresql://localhost:5432/pharmacy_db?createDatabaseIfNotExist=true
+    username: ur-username
+    password: ur-password
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+
+server:
+  port: 8084
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+  defaultZone:
+    url: http://localhost:8761/eureka/
