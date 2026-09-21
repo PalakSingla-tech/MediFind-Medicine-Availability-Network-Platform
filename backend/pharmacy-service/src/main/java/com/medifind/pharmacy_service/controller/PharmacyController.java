@@ -11,7 +11,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/pharmacy")
+@RequestMapping({"/api/pharmacy", "/api/pharmacies"})
 @CrossOrigin(origins = "*")
 public class PharmacyController {
 
@@ -93,7 +93,7 @@ public class PharmacyController {
     public ResponseEntity<List<NearbyPharmacyResponseDTO>> getNearbyPharmacies(
             @RequestParam double lat,
             @RequestParam double lng,
-            @RequestParam Long medicineId,
+            @RequestParam(required = false) Long medicineId,
             @RequestParam(required = false, defaultValue = "5.0") double radius
     ) {
         return ResponseEntity.ok(pharmacyService.getNearbyPharmacies(lat, lng, medicineId, radius));

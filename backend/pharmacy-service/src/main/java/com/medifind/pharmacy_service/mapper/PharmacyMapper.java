@@ -4,12 +4,13 @@ import com.medifind.pharmacy_service.dto.PharmacyRequestDTO;
 import com.medifind.pharmacy_service.dto.PharmacyResponseDTO;
 import com.medifind.pharmacy_service.dto.PharmacyUpdateDTO;
 import com.medifind.pharmacy_service.entity.Pharmacy;
+import com.medifind.pharmacy_service.entity.VerificationStatus;
 import org.springframework.stereotype.Component;
 
 @Component
 public class PharmacyMapper {
-    public Pharmacy toEntity(Long ownerId, PharmacyRequestDTO dto)
-    {
+
+    public Pharmacy toEntity(Long ownerId, PharmacyRequestDTO dto) {
         return Pharmacy.builder()
                 .ownerId(ownerId)
                 .name(dto.getName())
@@ -30,11 +31,12 @@ public class PharmacyMapper {
                 .pharmacistName(dto.getPharmacistName())
                 .description(dto.getDescription())
                 .pharmacistRegistrationNumber(dto.getPharmacistRegistrationNumber())
+                .verificationStatus(VerificationStatus.PENDING)
+                .isVerified(false)
                 .build();
     }
 
-    public PharmacyResponseDTO toResponseDto(Pharmacy ph)
-    {
+    public PharmacyResponseDTO toResponseDto(Pharmacy ph) {
         return PharmacyResponseDTO.builder()
                 .pharmacyId(ph.getPharmacyId())
                 .name(ph.getName())
@@ -56,27 +58,28 @@ public class PharmacyMapper {
                 .description(ph.getDescription())
                 .pharmacistRegistrationNumber(ph.getPharmacistRegistrationNumber())
                 .isVerified(ph.isVerified())
+                .verificationStatus(ph.getVerificationStatus())
+                .rejectionReason(ph.getRejectionReason())
                 .build();
     }
 
     public void updateEntity(Pharmacy ph, PharmacyUpdateDTO dto) {
-
-        ph.setName(dto.getName());
-        ph.setPharmacyType(dto.getPharmacyType());
-        ph.setContactPersonName(dto.getContactPersonName());
-        ph.setEmail(dto.getEmail());
-        ph.setPhone(dto.getPhone());
-        ph.setAddress(dto.getAddress());
-        ph.setCity(dto.getCity());
-        ph.setState(dto.getState());
-        ph.setPincode(dto.getPincode());
-        ph.setLatitude(dto.getLatitude());
-        ph.setLongitude(dto.getLongitude());
-        ph.setGstin(dto.getGstin());
-        ph.setPharmacistName(dto.getPharmacistName());
-        ph.setDescription(dto.getDescription());
-        ph.setPharmacistRegistrationNumber(
-                dto.getPharmacistRegistrationNumber()
-        );
+        if (dto.getName() != null && !dto.getName().isBlank()) ph.setName(dto.getName().trim());
+        if (dto.getPharmacyType() != null) ph.setPharmacyType(dto.getPharmacyType());
+        if (dto.getContactPersonName() != null && !dto.getContactPersonName().isBlank()) ph.setContactPersonName(dto.getContactPersonName().trim());
+        if (dto.getEmail() != null && !dto.getEmail().isBlank()) ph.setEmail(dto.getEmail().trim());
+        if (dto.getPhone() != null && !dto.getPhone().isBlank()) ph.setPhone(dto.getPhone().trim());
+        if (dto.getAddress() != null && !dto.getAddress().isBlank()) ph.setAddress(dto.getAddress().trim());
+        if (dto.getCity() != null && !dto.getCity().isBlank()) ph.setCity(dto.getCity().trim());
+        if (dto.getState() != null && !dto.getState().isBlank()) ph.setState(dto.getState().trim());
+        if (dto.getPincode() != null && !dto.getPincode().isBlank()) ph.setPincode(dto.getPincode().trim());
+        if (dto.getLatitude() != null && !dto.getLatitude().isNaN() && dto.getLatitude() != 0.0) ph.setLatitude(dto.getLatitude());
+        if (dto.getLongitude() != null && !dto.getLongitude().isNaN() && dto.getLongitude() != 0.0) ph.setLongitude(dto.getLongitude());
+        if (dto.getGstin() != null && !dto.getGstin().isBlank()) ph.setGstin(dto.getGstin().trim());
+        if (dto.getPharmacistName() != null && !dto.getPharmacistName().isBlank()) ph.setPharmacistName(dto.getPharmacistName().trim());
+        if (dto.getDescription() != null && !dto.getDescription().isBlank()) ph.setDescription(dto.getDescription().trim());
+        if (dto.getPharmacistRegistrationNumber() != null && !dto.getPharmacistRegistrationNumber().isBlank()) ph.setPharmacistRegistrationNumber(dto.getPharmacistRegistrationNumber().trim());
+        if (dto.getLicenseDocumentUrl() != null && !dto.getLicenseDocumentUrl().isBlank()) ph.setLicenseDocumentUrl(dto.getLicenseDocumentUrl().trim());
+        if (dto.getLicenseExpiryDate() != null) ph.setLicenseExpiryDate(dto.getLicenseExpiryDate());
     }
 }

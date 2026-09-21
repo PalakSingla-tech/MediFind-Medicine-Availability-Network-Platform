@@ -5,6 +5,8 @@ import com.medifind.medicine_service.dto.MedicineResponseDTO;
 import com.medifind.medicine_service.entity.Medicines;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
+
 @Component
 public class MedicineMapper {
     public MedicineResponseDTO toResponseDTO(Medicines md)
@@ -18,7 +20,7 @@ public class MedicineMapper {
                 .barcode(md.getBarcode())
                 .strength(md.getStrength())
                 .requiresPrescription(md.getRequiresPrescription())
-                .search_keywords(md.getSearch_keywords())
+                .search_keywords(md.getSearch_keywords() != null ? new ArrayList<>(md.getSearch_keywords()) : new ArrayList<>())
                 .category(md.getCategory())
                 .status(md.getStatus())
                 .build();
@@ -34,7 +36,7 @@ public class MedicineMapper {
                 .strength(dto.getStrength())
                 .barcode(dto.getBarcode())
                 .requiresPrescription(dto.getRequiresPrescription())
-                .search_keywords(dto.getSearch_keywords())
+                .search_keywords(dto.getSearch_keywords() != null ? new ArrayList<>(dto.getSearch_keywords()) : new ArrayList<>())
                 .category(dto.getCategory())
                 .status(dto.getStatus())
                 .build();

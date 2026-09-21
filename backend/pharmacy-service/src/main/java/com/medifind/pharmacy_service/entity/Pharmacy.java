@@ -74,8 +74,31 @@ public class Pharmacy {
     private String description;
 
     // Verification
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, columnDefinition = "varchar(255) default 'PENDING'")
+    @Builder.Default
+    private VerificationStatus verificationStatus = VerificationStatus.PENDING;
+
+    @Column(length = 1000)
+    private String rejectionReason;
+
     @Builder.Default
     private boolean isVerified = false;
+
+    @PrePersist
+    public void prePersist() {
+        if (verificationStatus == null) {
+            verificationStatus = VerificationStatus.PENDING;
+        }
+        isVerified = (verificationStatus == VerificationStatus.VERIFIED);
+    }
+
+    @PreUpdate
+    public void preUpdate() {
+        if (verificationStatus != null) {
+            isVerified = (verificationStatus == VerificationStatus.VERIFIED);
+        }
+    }
 
     public enum PharmacyType {
         RETAIL,

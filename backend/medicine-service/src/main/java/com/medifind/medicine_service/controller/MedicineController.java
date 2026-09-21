@@ -1,5 +1,6 @@
 package com.medifind.medicine_service.controller;
 
+import com.medifind.medicine_service.dto.AlternativeWithStockDTO;
 import com.medifind.medicine_service.dto.MedicineRequestDTO;
 import com.medifind.medicine_service.dto.MedicineResponseDTO;
 import com.medifind.medicine_service.service.MedicineService;
@@ -45,6 +46,20 @@ public class MedicineController {
     public ResponseEntity<List<MedicineResponseDTO>> getGenericAlternatives(@PathVariable Long id)
     {
         return ResponseEntity.ok(medicineService.getGenericAlternatives(id));
+    }
+
+    /**
+     * GET /api/medicines/{id}/alternatives-with-stock?lat={lat}&lng={lng}&radius={radius}
+     * Purpose: Finds generic alternative medicines enriched with nearby pharmacy stock information.
+     */
+    @GetMapping("/{id}/alternatives-with-stock")
+    public ResponseEntity<List<AlternativeWithStockDTO>> getGenericAlternativesWithStock(
+            @PathVariable Long id,
+            @RequestParam double lat,
+            @RequestParam double lng,
+            @RequestParam(required = false, defaultValue = "5.0") Double radius)
+    {
+        return ResponseEntity.ok(medicineService.getGenericAlternativesWithStock(id, lat, lng, radius));
     }
 
     /**

@@ -1,0 +1,78 @@
+spring:
+  application:
+    name: api-gateway
+  cloud:
+    gateway:
+      server:
+        webflux:
+          routes:
+            - id: auth-service
+              uri: lb://AUTH-SERVICE
+              predicates:
+                - Path=/api/auth/**
+
+            - id: user-service
+              uri: lb://USER-SERVICE
+              predicates:
+                - Path=/api/users/**
+
+            - id: pharmacy-service
+              uri: lb://PHARMACY-SERVICE
+              predicates:
+                - Path=/api/pharmacy/**
+
+            - id: medicine-service
+              uri: lb://MEDICINE-SERVICE
+              predicates:
+                - Path=/api/medicines/**
+
+            - id: emergency-service
+              uri: lb://EMERGENCY-SERVICE
+              predicates:
+                - Path=/api/emergency/**
+
+            - id: notification-service
+              uri: lb://NOTIFICATION-SERVICE
+              predicates:
+                - Path=/api/notification/**
+
+            # Admin routes
+            - id: admin-medicine-service
+              uri: lb://MEDICINE-SERVICE
+              predicates:
+                - Path=/api/admin/medicines/**
+
+            - id: admin-pharmacy-service
+              uri: lb://PHARMACY-SERVICE
+              predicates:
+                - Path=/api/admin/pharmacies/**
+
+            - id: admin-auth-service
+              uri: lb://AUTH-SERVICE
+              predicates:
+                - Path=/api/admin/users/**
+
+server:
+  port: 8080
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
+
+jwt:
+  secretKey: ur-jwt-secret-key
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  endpoint:
+    gateway:
+      enabled: true

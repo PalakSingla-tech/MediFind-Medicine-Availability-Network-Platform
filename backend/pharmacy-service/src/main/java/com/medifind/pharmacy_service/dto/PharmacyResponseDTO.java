@@ -37,6 +37,8 @@ public class PharmacyResponseDTO {
     private String pharmacistRegistrationNumber;
     private String description;
     private boolean isVerified;
+    private com.medifind.pharmacy_service.entity.VerificationStatus verificationStatus;
+    private String rejectionReason;
 
     private Double averageRating;
     private Long totalRatings;

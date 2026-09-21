@@ -5,6 +5,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -38,8 +39,13 @@ public class Medicines {
     @NotNull(message = "Required Prescription or not is required")
     private String requiresPrescription;
 
-    ArrayList<String> search_keywords;
+    @ElementCollection(fetch = FetchType.EAGER)
+    @CollectionTable(name = "medicine_search_keywords", joinColumns = @JoinColumn(name = "med_id"))
+    @Column(name = "keyword")
+    @Builder.Default
+    private List<String> search_keywords = new ArrayList<>();
 
+    @Enumerated(EnumType.STRING)
     private MedicineCategory category;
 
     public enum MedicineCategory{

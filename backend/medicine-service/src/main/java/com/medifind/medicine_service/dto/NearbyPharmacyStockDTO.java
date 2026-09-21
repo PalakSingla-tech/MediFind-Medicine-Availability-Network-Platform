@@ -1,6 +1,5 @@
-package com.medifind.pharmacy_service.dto;
+package com.medifind.medicine_service.dto;
 
-import com.medifind.pharmacy_service.entity.Pharmacy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -10,13 +9,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class NearbyPharmacyResponseDTO {
+public class NearbyPharmacyStockDTO {
 
     private Long pharmacyId;
 
     private String name;
 
-    private Pharmacy.PharmacyType pharmacyType;
+    private String pharmacyType;
 
     private String contactPersonName;
 
@@ -37,7 +36,6 @@ public class NearbyPharmacyResponseDTO {
     private Double longitude;
 
     private boolean isVerified;
-    private com.medifind.pharmacy_service.entity.VerificationStatus verificationStatus;
 
     private String description;
 
@@ -55,5 +53,6 @@ public class NearbyPharmacyResponseDTO {
 
     // Rating details
     private Double averageRating;
+
     private Long totalRatings;
 }

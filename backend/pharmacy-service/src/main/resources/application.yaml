@@ -4,7 +4,7 @@ spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/pharmacy_db?createDatabaseIfNotExist=true
     username: ur-username
-    password: ur-password
+    password: ur-passwordu
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -18,5 +18,8 @@ eureka:
   client:
     register-with-eureka: true
     fetch-registry: true
-  defaultZone:
-    url: http://localhost:8761/eureka/
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ip-address}:${spring.application.name}:${server.port}
